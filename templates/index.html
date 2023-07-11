@@ -1,0 +1,33 @@
+{% include "header.html" %}
+
+<!--filedialog-->
+<form action="/voice_reader" method="post">
+    <label class="t_color">Upload your pdf file</label><br>
+    <input type="submit" name="file" value="Select"
+           class="btn btn-outline-secondary" style="border-radius: 50%" required>
+</form>
+
+<!--Error message-->
+<div style="color: red;">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+<!--Feedback area-->
+{% if file_loaded  %}
+<p class="t_color">You can now listen to <b><em>"{{ file_loaded }}".</em></b></p>
+{% else %}
+<p class="t_color">Waiting for your file to be ready...</p>
+{% endif %}
+<button class="btn btn-outline-secondary" style="border-radius: 50%">
+    <a target="_blank" rel="noopener noreferrer"
+       class="post-a" href="{{tts_data}}"
+       style="text-decoration: none;">Listen to your pdf</a>
+</button>
+
+{% include "footer.html" %}
